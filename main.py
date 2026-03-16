@@ -83,6 +83,25 @@ class Bill(BaseModel):
         return [Bill(**bill) for bill in data]
 
 
+class ApartmentSettlement(BaseModel):
+    apartment: str
+    month: int
+    year: int
+    total_bills: float
+    total_rent: float
+    date_agreement_from: str
+    amount_due: float
+
+    @staticmethod
+    def from_json_file(file_path: str) -> Dict[str, 'ApartmentSettlement']:
+        with open(file_path, 'r') as file:
+            data = json.load(file)
+
+        assert isinstance(data, dict), "Expected a dictionary of apartment settlements"
+
+        return {key: ApartmentSettlement(**settlement) for key, settlement in data.items()}
+
+
 class Manager:
     def __init__(self, parameters: Parameters):
         self.parameters = parameters 
