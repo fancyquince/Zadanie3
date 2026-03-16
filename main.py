@@ -151,4 +151,21 @@ if __name__ == '__main__':
         print("  Transfers:")
         for transfer in manager.transfers:
             if transfer.tenant == tenant.name:
-                print(f"    - {transfer.amount_pln} PLN | {transfer.date} | settlement: {transfer.settlement_year}/{transfer.settlement_month}")
+                print('  ', transfer.amount_pln, transfer.date, transfer.settlement_year, transfer.settlement_month)
+
+class TenantSettlement:
+    def __init__(self, najemca, miesiac, rok, 
+                 rozliczenie_mieszkania, kwota_czynszu, 
+                 kwota_rachunki, suma_przelewow):
+        self.najemca = najemca
+        self.miesiac = miesiac
+        self.rok = rok
+        self.rozliczenie_mieszkania = rozliczenie_mieszkania
+        self.kwota_czynszu = kwota_czynszu
+        self.kwota_rachunki = kwota_rachunki
+        self.suma_przelewow = suma_przelewow
+        self.saldo = self.oblicz_saldo()
+
+    def oblicz_saldo(self):
+        koszty = self.kwota_czynszu + self.kwota_rachunki
+        return self.suma_przelewow - koszty
